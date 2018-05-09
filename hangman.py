@@ -1,6 +1,11 @@
 import csv
 
+words = set()
+
+
 with open('words.csv') as file:
     reader = csv.reader(file)
     for row in reader:
-        print(row)
+        words.add(row[0])
+
+print(words)

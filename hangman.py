@@ -22,13 +22,7 @@ def load_words_from_file():
 
 
 def get_first_column_longer_than(row, minimum):
-    """Adds words longer than supplied min length
-
-    >>> get_first_column_longer_than(['testCol1', 'testCol2'], 4)
-    'testCol1'
-
-    >>> get_first_column_longer_than(['testCol1', 'testCol2'], 8)
-
+    """
     """
     first_column = row[0]
     if len(first_column) > minimum:
@@ -37,7 +31,8 @@ def get_first_column_longer_than(row, minimum):
 
 if __name__ == '__main__':
     import doctest
-    doctest.testmod()
+    #doctest.testmod()  # for in-line tests
+    doctest.testfile("hangman_examples.md")
     play_games()
 
 

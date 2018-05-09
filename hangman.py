@@ -18,16 +18,26 @@ def load_words_from_file():
     with open('10k_words.txt') as file:
         reader = csv.reader(file)
         for row in reader:
-            add_if_longer_than_min(row, 4)
+            words.add(get_first_column_longer_than(row, 3))
 
 
-def add_if_longer_than_min(row, minimum):
+def get_first_column_longer_than(row, minimum):
+    """Adds words longer than supplied min length
+
+    >>> get_first_column_longer_than(['testCol1', 'testCol2'], 4)
+    'testCol1'
+
+    >>> get_first_column_longer_than(['testCol1', 'testCol2'], 8)
+
+    """
     first_column = row[0]
-    if len(first_column) >= minimum:
-        words.add(first_column)
+    if len(first_column) > minimum:
+        return first_column
 
 
 if __name__ == '__main__':
+    import doctest
+    doctest.testmod()
     play_games()
 
 

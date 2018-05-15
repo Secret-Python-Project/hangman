@@ -2,18 +2,19 @@ import csv
 import time
 
 # configuration parameters
-alphabet = 'abcdefghijklmnopqrstuvwxyz'  # TODO put this somewhere better
+alphabet = 'abcdefghijklmnopqrstuvwxyz'.upper()
 sleep_time = 0.5  # TODO constants as UPPERCASE style wise?
 
 # private instance variables for state
-lives = 5
+starting_lives = 5
+current_lives = starting_lives
 difficulty = 0  # TODO consider enum
 hidden_word = []
 display_word = []
 
 
 def play_game():
-    global lives
+
 
     introduce_game() # View layer
     pick_difficulty()  # TODO separate View and Controller
@@ -21,33 +22,33 @@ def play_game():
     set_initial_display_word()
     print('Time to start guessing your', len(hidden_word), 'letter word' , ''.join(display_word))
     print("Hidden word: ", ''.join(hidden_word))  # TODO remove:
+    print(type(hidden_word))
 
     while display_word != hidden_word:
         check_lives()
-        print('You have',lives,' left')
+        print('You have',current_lives,' left')
         letter = get_player_guess()
         update_display_word(letter)
 
     print('Waahoooo You Guessed it!')
+    does_player_want_to_play_again()
 
 
 def check_lives():
-    if lives > 0:
+    if current_lives > 0:
         return
     else:
         game_over()
 
 
-def game_over():
-    print('You have run out of lives...')
+def does_player_want_to_play_again():
     answer = input('Do you wish to play again? Y/N')
 
     if answer.upper() == 'Y':
-        global lives
+        current_lives
         print()
         print('staring new game...')
-        time.sleep(2*sleep_time)
-        lives = 5 # TODO Remove the Magic
+        time.sleep(2 * sleep_time)
         play_game()
 
     elif answer.upper() == 'N':
@@ -56,20 +57,23 @@ def game_over():
         power_down = list('..........')
         while len(power_down) > 0:
             print(''.join(power_down))
-            time.sleep(sleep_time/2)
+            time.sleep(sleep_time / 2)
             power_down.pop()
         quit()
 
     else:
         print('Invalid input')
-        game_over()
+        does_player_want_to_play_again()
 
 
+def game_over():
+    print('You have run out of lives...')
+    does_player_want_to_play_again()
 
 
 def get_player_guess():
     print()
-    letter = input('Please guess a letter: ').lower() # get player input, force lowercase for the moment
+    letter = input('Please guess a letter: ').upper() # get player input, force lowercase for the moment
     if not is_valid_guess(letter):
         print("Opps, that's not right. Please try again.")  # Used " this time because of the ' in sentence
         get_player_guess()
@@ -79,15 +83,19 @@ def get_player_guess():
 def update_display_word(letter):
     if letter in hidden_word:
         print('Found A Letter')
-        for position_in_word in range(len(hidden_word)):
-            if hidden_word[position_in_word] == letter:
-                display_word[position_in_word] = letter
-                print(display_word)  # TODO if there are multiple letters in loops and displays multiple display_words
+        place_letters(letter)
     else:
-        global lives
+        global current_lives
 
         print('Not in this word, try again...') # TODOif in correct it takes two goes to get the right letter in place
-        lives -= 1
+        current_lives -= 1
+
+
+def place_letters(letter):
+    for position_in_word in range(len(hidden_word)):
+        if hidden_word[position_in_word] == letter:
+            display_word[position_in_word] = letter
+            print(display_word)  # TODO if there are multiple letters in loops and displays multiple display_words
 
 
 def introduce_game():
@@ -150,8 +158,9 @@ def get_first_column_longer_than(row):
 def set_random_hidden_word():
     words = load_words_from_file()
     global hidden_word
-    hidden_word = list(words.pop()) # Convertys the string output into a list for comparison.
-
+    hidden_word = words.pop() # Pops word from list
+    hidden_word = hidden_word.upper() # Forces all UPPER case
+    hidden_word = list(hidden_word) # Converts the string output into a list for comparison.
 
     # TODO make hidden_word upper case
 
@@ -159,7 +168,7 @@ def set_random_hidden_word():
 def set_initial_display_word():
     for hidden_letter in hidden_word:
         if hidden_letter in alphabet:
-            display_word.append('.')  # put "_ " for every letter in hidden word
+            display_word.append('.')  # put "." for every letter in hidden word
         else:
             display_word.append('?')  # leave as check during development
 
@@ -172,9 +181,6 @@ def is_valid_guess(letter_guessed):
     else:
         return True
 
-
-def user_wants_to_play(): # TODO make this richerer
-    return True
 
 if __name__ == '__main__':
     import doctest

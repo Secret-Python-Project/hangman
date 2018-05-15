@@ -1,8 +1,6 @@
 import csv
 import time
 
-words = set()  # keeping so that subsequent plays have no repeat words
-
 # configuration parameters
 alphabet = 'abcdefghijklmnopqrstuvwxyz'  # TODO put this somewhere better
 sleep_time = 0.5  # TODO constants as UPPERCASE style wise?
@@ -11,6 +9,7 @@ sleep_time = 0.5  # TODO constants as UPPERCASE style wise?
 lives_left = 10
 difficulty = 0  # TODO consider enum
 hidden_word = ''
+display_word = ''
 
 
 def play_game():
@@ -20,11 +19,10 @@ def play_game():
 
     introduce_game() # View layer
     pick_difficulty()  # TODO separate View and Controller
-    set_random_hidden_word()
-
-    # display initial blanks
-    display_word = make_blank_spaces(hidden_word)
-    show_blank_spaces(display_word) # present blanks to user
+    set_random_hidden_word()  # could be load_words_from_file().pop()
+    print("Hidden word:", hidden_word)
+    set_initial_display_word()
+    print(display_word)
 
     while not game_over:
         while not valid_input:
@@ -38,7 +36,7 @@ def play_game():
                 for i in range(len(hidden_word)):
                     if hidden_word[i] == letter_guessed:
                         display_word[i] = letter_guessed
-                show_blank_spaces(display_word)
+                print(display_word)
                 if '_ ' not in display_word:
                     print('Waahoooo You Guess it!')
                     game_over = True
@@ -50,8 +48,6 @@ def play_game():
                         print('You have ', lives_left, 'lives left')
                     elif letter_guessed in hidden_word:
                         print(letter_guessed)
-
-                hidden_word(display_word)
 
 
 def introduce_game():
@@ -108,33 +104,18 @@ def get_first_column_longer_than(row):
 def set_random_hidden_word():
     words = load_words_from_file()
     hidden_word = words.pop()
-    print()
-    print(hidden_word)  # check to see what hidden word is
-    print()
-    return hidden_word
 # TODO make hidden_word upper case
     '''
     For every letter in hidden_word make it upper case
     '''
 
 
-def make_blank_spaces(hidden_word):
-    print('The word is', len(hidden_word), 'characters long')
-    display_word = []  # create an empty list what the word can be revealed in
-    for hidden_letters in range(len(hidden_word)):
-        if hidden_word[hidden_letters] in alphabet:
-            display_word.append('_ ')  # put "_ " for every letter in hidden word
+def set_initial_display_word():
+    for hidden_letter in hidden_word:
+        if hidden_letter in alphabet:
+            display_word.append('.')  # put "_ " for every letter in hidden word
         else:
-            display_word.append(hidden_word[hidden_letters])
-    print('Displayword:', display_word)
-    return display_word
-
-
-def show_blank_spaces(display_word):
-    word = ''
-    for letters in range(len(display_word)):
-        word += display_word[letters]  # increment through word
-    print('WORD', word)
+            display_word.append('?')  # leave as check during development
 
 
 def get_player_guess():

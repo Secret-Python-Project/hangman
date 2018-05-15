@@ -42,19 +42,34 @@ def game_over():
     print('You have run out of lives...')
     answer = input('Do you wish to play again? Y/N')
 
-    if answer is 'y' or 'Y':
+    if answer.upper() == 'Y':
+        global lives
+        print()
         print('staring new game...')
         time.sleep(2*sleep_time)
         lives = 5 # TODO Remove the Magic
         play_game()
-    else:
-        print('Goodbye')
+
+    elif answer.upper() == 'N':
         print()
+        print('Goodbye')
+        power_down = list('..........')
+        while len(power_down) > 0:
+            print(''.join(power_down))
+            time.sleep(sleep_time/2)
+            power_down.pop()
         quit()
+
+    else:
+        print('Invalid input')
+        game_over()
+
+
 
 
 def get_player_guess():
-    letter = input('\nPlease guess a letter: \n').lower() # get player input, force lowercase foe the moment
+    print()
+    letter = input('Please guess a letter: ').lower() # get player input, force lowercase for the moment
     if not is_valid_guess(letter):
         print("Opps, that's not right. Please try again.")  # Used " this time because of the ' in sentence
         get_player_guess()
@@ -74,16 +89,20 @@ def update_display_word(letter):
         print('Not in this word, try again...') # TODOif in correct it takes two goes to get the right letter in place
         lives -= 1
 
-        # Lose a life
-        # Tell Player how many lives left
-
 
 def introduce_game():
     print('Welcome to Hangman')
+    print('Loading please wait')
+    power_up = list('.')
+    while len(power_up) < 6:
+        print(''.join(power_up))
+        time.sleep(sleep_time / 2)
+        power_up.append('.')
     time.sleep(sleep_time)  # magic number
     print('Before I go get some words...')
     time.sleep(sleep_time)
-    print('What Difficulty would you like to play?\n')
+    print('What Difficulty would you like to play?')
+    print()
     time.sleep(sleep_time)
 
 
@@ -94,7 +113,8 @@ def pick_difficulty():
     level = input('')  # explain why ''
 
     if level not in ['1', '2', '3']:
-        print('Invalid Input\n')
+        print('Invalid Input')
+        print()
         pick_difficulty()
     else:
         assign_difficulty(level)

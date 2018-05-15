@@ -9,7 +9,7 @@ sleep_time = 0.5  # TODO constants as UPPERCASE style wise?
 lives_left = 10
 difficulty = 0  # TODO consider enum
 hidden_word = ''
-display_word = ''
+display_word = []
 
 
 def play_game():
@@ -20,7 +20,6 @@ def play_game():
     introduce_game() # View layer
     pick_difficulty()  # TODO separate View and Controller
     set_random_hidden_word()  # could be load_words_from_file().pop()
-    print("Hidden word:", hidden_word)
     set_initial_display_word()
     print(display_word)
 
@@ -28,7 +27,7 @@ def play_game():
         while not valid_input:
             letter_guessed = get_player_guess()
             valid_input = validate_guess(letter_guessed)
-            if valid_input == False:
+            if not valid_input:
                 print("Opps, that's not right. Please try again.")  # Used " this time because of the ' in sentence
             else:
                 valid_input = True
@@ -75,6 +74,7 @@ def pick_difficulty():
 
 
 def assign_difficulty(level):
+    global difficulty
     if level == '1':
         difficulty = 5  # TODO how to formally reference the global?
 
@@ -103,6 +103,7 @@ def get_first_column_longer_than(row):
 
 def set_random_hidden_word():
     words = load_words_from_file()
+    global hidden_word
     hidden_word = words.pop()
 # TODO make hidden_word upper case
     '''

@@ -5,36 +5,44 @@ words = set()  # keeping so that subsequent plays have no repeat words
 
 alphabet = 'abcdefghijklmnopqrstuvwxyz'  # TODO put this somewhere better
 lives_left = 10
-game_over = False
 
 
 def play_game():
-    row = '0'
+    row = '0'  # TODO don't hack, better solution?
     valid_input = False
+    game_over = False
     introduce_game() # Input Layer
     difficulty = set_game_start_conditions()
     hidden_word = pick_random_word_from_set(difficulty) # pick a random word (psudeo atm)
     display_word = make_blank_spaces(hidden_word)
     show_blank_spaces(display_word) # present blanks to user
 
-    while not valid_input:
-        letter_guessed = get_player_guess()
-        valid_input = validate_guess(letter_guessed)
-        if valid_input == False:
-            print("Opps, that's not right. Please try again.")  # Used " this time because of the ' in sentence
-        else:
-            valid_input = True
-        if letter_guessed in hidden_word:
-            for i in range(len(hidden_word)):
-                if hidden_word[i] == letter_guessed:
-                    display_word[i] = letter_guessed
-            show_blank_spaces(display_word)
-            if '_ ' not in display_word:
-                print('Waahoooo You Guess it!')
-        else:
-            evaluate_guess(letter_guessed,hidden_word)
+    while not game_over:
+        while not valid_input:
+            letter_guessed = get_player_guess()
+            valid_input = validate_guess(letter_guessed)
+            if valid_input == False:
+                print("Opps, that's not right. Please try again.")  # Used " this time because of the ' in sentence
+            else:
+                valid_input = True
+            if letter_guessed in hidden_word:
+                for i in range(len(hidden_word)):
+                    if hidden_word[i] == letter_guessed:
+                        display_word[i] = letter_guessed
+                show_blank_spaces(display_word)
+                if '_ ' not in display_word:
+                    print('Waahoooo You Guess it!')
+                    game_over = True
+            else:
+                for letters in range(len(hidden_word)):
+                    if letter_guessed not in hidden_word:
+                        lives_left - 1
+                        print('Opps, thats not right')
+                        print('You have ', lives_left, 'lives left')
+                    elif letter_guessed in hidden_word:
+                        print(letter_guessed)
 
-            hidden_word(display_word)
+                hidden_word(display_word)
 
 
 def set_game_start_conditions():
@@ -143,15 +151,6 @@ def validate_guess(letter_guessed):
     else:
         return True
 
-
-def evaluate_guess(letter_guessed, hidden_word): # TODO Validate input is a single character only and not numbers or specials
-    for letters in range(len(hidden_word)):
-        if letter_guessed not in hidden_word:
-            lives_left - 1
-            print ('Opps, thats not right')
-            print('You have ', lives_left, 'lives left')
-        elif letter_guessed in hidden_word:
-            print(letter_guessed)
 
 '''
 def game_over(display_word):

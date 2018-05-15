@@ -3,15 +3,19 @@ import time
 
 words = set()  # keeping so that subsequent plays have no repeat words
 
+# configuration parameters
 alphabet = 'abcdefghijklmnopqrstuvwxyz'  # TODO put this somewhere better
-lives_left = 10
+sleep_time = 0.5  # TODO constants as UPPERCASE style wise?
 
+# private instance variables for state
+lives_left = 10
+difficulty = 0  # TODO consider enum
 
 def play_game():
-    row = '0'  # TODO don't hack, better solution?
     valid_input = False
     game_over = False
-    introduce_game() # Input Layer
+
+    introduce_game() # View Layer
     difficulty = set_game_start_conditions()
     hidden_word = pick_random_word_from_set(difficulty) # pick a random word (psudeo atm)
     display_word = make_blank_spaces(hidden_word)
@@ -46,42 +50,37 @@ def play_game():
 
 
 def set_game_start_conditions():
-    level = pick_level()  # input Layer
-    check_level_validity(level)  # Game Logic
-    difficulty = assign_difficulty(level)  # Game Logic
     load_words_from_file(difficulty)
     print('Loaded ' + str(len(words)) + ' words')
-
     return difficulty
 
 
 def introduce_game():
     print('Welcome to Hangman')
-    time.sleep(.5)
+    time.sleep(sleep_time)  # magic number
     print('Before I go get some words...')
-    time.sleep(.5)
+    time.sleep(sleep_time)
     print('What Difficulty would you like to play?')
-    time.sleep(.5)
+    time.sleep(sleep_time)
     print()
+    pick_level()
+
 
 def pick_level():
     print('Enter 1 for Easy')
     print('Enter 2 for Medium')
     print('Enter 3 for Hard')
-    level = input('')
-    return level
+    level = input('')  # explain why ''
 
-
-def check_level_validity(level):
     if level not in ['1', '2', '3']:
         print('Invalid Input')
         print()
-        set_game_start_conditions()
+        pick_level()
+    else:
+        assign_difficulty(level)
 
 
 def assign_difficulty(level):
-    difficulty = 0
-
     if level == '1':
         difficulty = 5
 
@@ -90,8 +89,8 @@ def assign_difficulty(level):
 
     elif level == '3':
         difficulty = 10
-    print(difficulty)
-    return difficulty
+    print(difficulty)  # TODO remove
+
 
 #  TODO take hard and medium words away to create easy words
 def load_words_from_file(difficulty):
@@ -144,6 +143,7 @@ def get_player_guess():
     letter_guessed = input('Please guess a letter: ').lower() # get player input, force lowercase foe the moment
     print()
     return letter_guessed
+
 
 def validate_guess(letter_guessed):
     if len(letter_guessed) > 1 or letter_guessed not in alphabet:

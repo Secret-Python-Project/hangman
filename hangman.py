@@ -21,32 +21,39 @@ def play_game():
     pick_difficulty()  # TODO separate View and Controller
     set_random_hidden_word()  # could be load_words_from_file().pop()
     set_initial_display_word()
+    print("Hidden word: ", hidden_word)  # TODO remove
     print(display_word)
 
-    while not game_over:
-        while not valid_input:
-            letter_guessed = get_player_guess()
-            valid_input = validate_guess(letter_guessed)
-            if not valid_input:
-                print("Opps, that's not right. Please try again.")  # Used " this time because of the ' in sentence
-            else:
-                valid_input = True
-            if letter_guessed in hidden_word:
-                for i in range(len(hidden_word)):
-                    if hidden_word[i] == letter_guessed:
-                        display_word[i] = letter_guessed
-                print(display_word)
-                if '_ ' not in display_word:
-                    print('Waahoooo You Guess it!')
-                    game_over = True
-            else:
-                for letters in range(len(hidden_word)):
-                    if letter_guessed not in hidden_word:
-                        lives_left - 1
-                        print('Opps, thats not right')
-                        print('You have ', lives_left, 'lives left')
-                    elif letter_guessed in hidden_word:
-                        print(letter_guessed)
+    while True:
+        whole_word = input("Your guess? ")
+        if str(whole_word) == hidden_word:
+            print("You win!")
+            break
+
+
+    # while not valid_input:
+    #     letter_guessed = get_player_guess()
+    #     valid_input = validate_guess(letter_guessed)
+    #     if not valid_input:
+    #         print("Opps, that's not right. Please try again.")  # Used " this time because of the ' in sentence
+    #     else:
+    #         valid_input = True
+    #     if letter_guessed in hidden_word:
+    #         for i in range(len(hidden_word)):
+    #             if hidden_word[i] == letter_guessed:
+    #                 display_word[i] = letter_guessed
+    #         print(display_word)
+    #         if '_ ' not in display_word:
+    #             print('Waahoooo You Guess it!')
+    #             game_over = True
+    #     else:
+    #         for letters in range(len(hidden_word)):
+    #             if letter_guessed not in hidden_word:
+    #                 lives_left - 1
+    #                 print('Opps, thats not right')
+    #                 print('You have ', lives_left, 'lives left')
+    #             elif letter_guessed in hidden_word:
+    #                 print(letter_guessed)
 
 
 def introduce_game():

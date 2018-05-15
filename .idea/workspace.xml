@@ -2,6 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="611ad9f5-b860-4e9b-a0b3-808db55cbf7e" name="Default" comment="">
+      <change afterPath="$PROJECT_DIR$/pytesting" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/hangman.py" beforeDir="false" afterPath="$PROJECT_DIR$/hangman.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -16,8 +18,8 @@
       <file leaf-file-name="hangman.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/hangman.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="320">
-              <caret line="118" column="84" selection-start-line="118" selection-start-column="84" selection-end-line="118" selection-end-column="84" />
+            <state relative-caret-position="563">
+              <caret line="53" lean-forward="true" selection-start-line="53" selection-end-line="53" />
               <folding>
                 <element signature="e#0#10#0" expanded="true" />
               </folding>
@@ -42,6 +44,7 @@
       <list>
         <option value="$PROJECT_DIR$/words.csv" />
         <option value="$PROJECT_DIR$/hangman_tests.txt" />
+        <option value="$PROJECT_DIR$/pytesting" />
         <option value="$PROJECT_DIR$/hangman.py" />
       </list>
     </option>
@@ -88,7 +91,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Python.hangman">
     <configuration name="hangman" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="hangman" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -107,9 +110,32 @@
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
     </configuration>
+    <configuration name="pytesting" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="hangman" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/pytesting" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+    </configuration>
+    <list>
+      <item itemvalue="Python.hangman" />
+      <item itemvalue="Python.pytesting" />
+    </list>
     <recent_temporary>
       <list>
         <item itemvalue="Python.hangman" />
+        <item itemvalue="Python.pytesting" />
       </list>
     </recent_temporary>
   </component>
@@ -184,20 +210,10 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="1" />
+      <option name="time" value="2" />
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/hangman.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="675">
-          <caret line="45" column="41" lean-forward="true" selection-start-line="45" selection-start-column="41" selection-end-line="45" selection-end-column="41" />
-          <folding>
-            <element signature="e#0#10#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/hangman.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="300">
@@ -498,16 +514,23 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/hangman_tests.txt" />
+    <entry file="file://$PROJECT_DIR$/hangman_examples.md" />
+    <entry file="file://$PROJECT_DIR$/pytesting">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="132">
+          <caret line="4" lean-forward="true" selection-start-line="4" selection-end-line="12" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/hangman.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="320">
-          <caret line="118" column="84" selection-start-line="118" selection-start-column="84" selection-end-line="118" selection-end-column="84" />
+        <state relative-caret-position="563">
+          <caret line="53" lean-forward="true" selection-start-line="53" selection-end-line="53" />
           <folding>
             <element signature="e#0#10#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/hangman_examples.md" />
   </component>
 </project>

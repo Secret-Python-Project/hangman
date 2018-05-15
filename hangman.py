@@ -6,29 +6,51 @@ alphabet = 'abcdefghijklmnopqrstuvwxyz'  # TODO put this somewhere better
 sleep_time = 0.5  # TODO constants as UPPERCASE style wise?
 
 # private instance variables for state
-# TODO add lives
+lives = 5
 difficulty = 0  # TODO consider enum
 hidden_word = []
 display_word = []
 
 
 def play_game():
+    global lives
+
     introduce_game() # View layer
     pick_difficulty()  # TODO separate View and Controller
     set_random_hidden_word()  # could be load_words_from_file().pop()
     set_initial_display_word()
+    print('Time to start guessing your', len(hidden_word), 'letter word' , ''.join(display_word))
+    print("Hidden word: ", ''.join(hidden_word))  # TODO remove:
 
-    print("Hidden word: ", hidden_word)  # TODO remov
-    print(type(hidden_word))
-    print(display_word)
-    print(type(display_word))
-
-    while str(display_word) != hidden_word:
+    while display_word != hidden_word:
+        check_lives()
+        print('You have',lives,' left')
         letter = get_player_guess()
         update_display_word(letter)
-        print(display_word)
 
     print('Waahoooo You Guessed it!')
+
+
+def check_lives():
+    if lives > 0:
+        return
+    else:
+        game_over()
+
+
+def game_over():
+    print('You have run out of lives...')
+    answer = input('Do you wish to play again? Y/N')
+
+    if answer is 'y' or 'Y':
+        print('staring new game...')
+        time.sleep(2*sleep_time)
+        lives = 5 # TODO Remove the Magic
+        play_game()
+    else:
+        print('Goodbye')
+        print()
+        quit()
 
 
 def get_player_guess():
@@ -42,26 +64,18 @@ def get_player_guess():
 def update_display_word(letter):
     if letter in hidden_word:
         print('Found A Letter')
-        
-
+        for position_in_word in range(len(hidden_word)):
+            if hidden_word[position_in_word] == letter:
+                display_word[position_in_word] = letter
+                print(display_word)  # TODO if there are multiple letters in loops and displays multiple display_words
     else:
-        print('Not in this word, try again...')
+        global lives
+
+        print('Not in this word, try again...') # TODOif in correct it takes two goes to get the right letter in place
+        lives -= 1
+
         # Lose a life
         # Tell Player how many lives left
-    # TODO write in test-driven way
-
-# def process_letter(letter):
-#     if letter in hidden_word:
-#         for index in hidden_word:
-#             if hidden_word[index] == letter:
-#                 display_word[index] = letter
-#         print(display_word)
-#     else:
-#         for letters in range(len(hidden_word)):
-#             if letter not in hidden_word:
-#                 print('Opps, thats not right')
-#             elif letter in hidden_word:
-#                 print(letter)
 
 
 def introduce_game():
@@ -90,7 +104,7 @@ def assign_difficulty(level):
     global difficulty
 
     if level == '1':
-        difficulty = 5  # TODO how to formally reference the global?
+        difficulty = 5  # TODO how to formally reference the global? ALSO needs Enum-ing
     elif level == '2':
         difficulty = 7
     elif level == '3':

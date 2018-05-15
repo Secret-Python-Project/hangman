@@ -10,14 +10,19 @@ sleep_time = 0.5  # TODO constants as UPPERCASE style wise?
 # private instance variables for state
 lives_left = 10
 difficulty = 0  # TODO consider enum
+hidden_word = ''
+
 
 def play_game():
+    # TODO are these caches?
     valid_input = False
     game_over = False
 
-    introduce_game() # View Layer
-    difficulty = set_game_start_conditions()
-    hidden_word = pick_random_word_from_set(difficulty) # pick a random word (psudeo atm)
+    introduce_game() # View layer
+    pick_difficulty()  # TODO separate View and Controller
+    set_random_hidden_word()
+
+    # display initial blanks
     display_word = make_blank_spaces(hidden_word)
     show_blank_spaces(display_word) # present blanks to user
 
@@ -49,12 +54,6 @@ def play_game():
                 hidden_word(display_word)
 
 
-def set_game_start_conditions():
-    load_words_from_file(difficulty)
-    print('Loaded ' + str(len(words)) + ' words')
-    return difficulty
-
-
 def introduce_game():
     print('Welcome to Hangman')
     time.sleep(sleep_time)  # magic number
@@ -63,10 +62,9 @@ def introduce_game():
     print('What Difficulty would you like to play?')
     time.sleep(sleep_time)
     print()
-    pick_level()
 
 
-def pick_level():
+def pick_difficulty():
     print('Enter 1 for Easy')
     print('Enter 2 for Medium')
     print('Enter 3 for Hard')
@@ -75,39 +73,40 @@ def pick_level():
     if level not in ['1', '2', '3']:
         print('Invalid Input')
         print()
-        pick_level()
+        pick_difficulty()
     else:
         assign_difficulty(level)
 
 
 def assign_difficulty(level):
     if level == '1':
-        difficulty = 5
+        difficulty = 5  # TODO how to formally reference the global?
 
     elif level == '2':
         difficulty = 7
 
     elif level == '3':
         difficulty = 10
-    print(difficulty)  # TODO remove
 
 
 #  TODO take hard and medium words away to create easy words
-def load_words_from_file(difficulty):
+def load_words_from_file():
+    words = set()  # Not an instance variable as temporary this function
     with open('10k_words.txt') as file:
         reader = csv.reader(file)
         for row in reader:
-            words.add(get_first_column_longer_than(row, difficulty))
+            words.add(get_first_column_longer_than(row))
+    return words
 
 
-def get_first_column_longer_than(row, difficulty):
+def get_first_column_longer_than(row):
     first_column = row[0]
     if len(first_column) > difficulty:
-        print(first_column)
         return first_column
 
 
-def pick_random_word_from_set(difficulty):
+def set_random_hidden_word():
+    words = load_words_from_file()
     hidden_word = words.pop()
     print()
     print(hidden_word)  # check to see what hidden word is

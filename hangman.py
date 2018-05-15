@@ -38,7 +38,14 @@ def get_player_guess():
 
 
 def update_display_word(letter):
-    print("imagine we're doing it!")
+    if letter in hidden_word:
+        print('Found A Letter')
+        
+
+    else:
+        print('Not in this word, try again...')
+        # Lose a life
+        # Tell Player how many lives left
     # TODO write in test-driven way
 
 # def process_letter(letter):

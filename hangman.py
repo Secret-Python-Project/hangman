@@ -8,7 +8,7 @@ sleep_time = 0.5  # TODO constants as UPPERCASE style wise?
 # private instance variables for state
 # TODO add lives
 difficulty = 0  # TODO consider enum
-hidden_word = ''
+hidden_word = []
 display_word = []
 
 
@@ -18,8 +18,10 @@ def play_game():
     set_random_hidden_word()  # could be load_words_from_file().pop()
     set_initial_display_word()
 
-    print("Hidden word: ", hidden_word)  # TODO remove
+    print("Hidden word: ", hidden_word)  # TODO remov
+    print(type(hidden_word))
     print(display_word)
+    print(type(display_word))
 
     while str(display_word) != hidden_word:
         letter = get_player_guess()
@@ -114,7 +116,9 @@ def get_first_column_longer_than(row):
 def set_random_hidden_word():
     words = load_words_from_file()
     global hidden_word
-    hidden_word = words.pop()
+    hidden_word = list(words.pop()) # Convertys the string output into a list for comparison.
+
+
     # TODO make hidden_word upper case
 
 

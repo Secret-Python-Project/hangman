@@ -14,7 +14,8 @@ display_word = []
 
 
 def play_game():
-
+    global current_lives, starting_lives
+    current_lives = starting_lives
 
     introduce_game() # View layer
     pick_difficulty()  # TODO separate View and Controller
@@ -22,7 +23,6 @@ def play_game():
     set_initial_display_word()
     print('Time to start guessing your', len(hidden_word), 'letter word' , ''.join(display_word))
     print("Hidden word: ", ''.join(hidden_word))  # TODO remove:
-    print(type(hidden_word))
 
     while display_word != hidden_word:
         check_lives()
@@ -47,7 +47,7 @@ def does_player_want_to_play_again():
     if answer.upper() == 'Y':
         current_lives
         print()
-        print('staring new game...')
+        print('Staring new game...')
         time.sleep(2 * sleep_time)
         play_game()
 
@@ -87,7 +87,9 @@ def update_display_word(letter):
     else:
         global current_lives
 
-        print('Not in this word, try again...') # TODOif in correct it takes two goes to get the right letter in place
+        print('Not in this word, try again...')
+        print(''.join(display_word))
+
         current_lives -= 1
 
 
@@ -95,7 +97,7 @@ def place_letters(letter):
     for position_in_word in range(len(hidden_word)):
         if hidden_word[position_in_word] == letter:
             display_word[position_in_word] = letter
-            print(display_word)  # TODO if there are multiple letters in loops and displays multiple display_words
+            print(''.join(display_word))  # TODO if there are multiple letters in loops and displays multiple display_words
 
 
 def introduce_game():

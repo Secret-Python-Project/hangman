@@ -88,12 +88,22 @@ def set_initial_display_word():
 
 
 def get_player_guess():
-    print()
-    letter = input('Please guess a letter: ').upper() # get player input, force lowercase for the moment
-    if not is_valid_guess(letter):
-        print("Opps, that's not right. Please try again.")  # Used " this time because of the ' in sentence
-        get_player_guess()
-    return letter
+    while True:  # keep trying for valid input
+        print()
+        letter = input('Please guess a letter: ').upper() # get player input, force lowercase for the moment
+        if not is_valid_guess(letter):
+            print("Opps, that's not right. Please try again.")  # Used " this time because of the ' in sentence
+        else:
+            return letter
+
+
+def is_valid_guess(letter_guessed):
+    if len(letter_guessed) != 1:  # single characters only
+        return False
+    elif letter_guessed not in ALPHABET:
+        return False
+    else:
+        return True
 
 
 def update_display_word(letter):
@@ -156,15 +166,6 @@ def load_words_from_file(length):
             if len(row[0]) == length:
                 words.add(row[0])
     return words
-
-
-def is_valid_guess(letter_guessed):
-    if len(letter_guessed) != 1:  # single characters only
-        return False
-    elif letter_guessed not in ALPHABET:
-        return False
-    else:
-        return True
 
 
 if __name__ == '__main__':

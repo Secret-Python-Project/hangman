@@ -82,7 +82,8 @@ def prompt_for_level():
 def pick_random_word(length):
     words = load_words_from_file(length)
     word = words.pop()  # Pops word from list
-    word = word.upper()  # Forces all string output into a list for comparison.
+    word = word.upper()  # Forces all UPPER case
+    word = list(word)  # Converts the string output into a list for comparison.
     return word
 
 

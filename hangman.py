@@ -58,33 +58,33 @@ def introduce_game():
     time.sleep(SLEEP_TIME)
 
 
-def check_lives():
-    if lives > 0:
-        return
-    else:
-        game_over()
+def prompt_for_level():
+    while True:  # keep asking until we get valid input
+        print('Enter 1 for Easy')
+        print('Enter 2 for Medium')
+        print('Enter 3 for Hard')
+        level = input('')  # explain why ''
 
-
-def prompt_to_play_again():
-    while True:  # keep on asking!
-        answer = input('Do you wish to play again? Y/N')
-
-        if answer.upper() == 'Y':
+        if level not in ['1', '2', '3']:
+            print('Invalid Input')
             print()
-            print('Starting new game...')
-            time.sleep(2 * SLEEP_TIME)
-            return True
-        elif answer.upper() == 'N':
-            print()
-            print('Goodbye')
-            power_down = list('..........')
-            while len(power_down) > 0:
-                print(''.join(power_down))
-                time.sleep(SLEEP_TIME / 2)
-                power_down.pop()
-            return False
         else:
-            print('Invalid input')
+            return get_word_length(level)
+
+
+def pick_random_word(length):
+    words = load_words_from_file(length)
+    word = words.pop()  # Pops word from list
+    word = word.upper()  # Forces all string output into a list for comparison.
+    return word
+
+
+def set_initial_display_word():
+    for hidden_letter in hidden_word:
+        if hidden_letter in ALPHABET:
+            display_word.append('.')  # put "." for every letter in hidden word
+        else:
+            display_word.append('?')  # leave as check during development
 
 
 def get_player_guess():
@@ -109,25 +109,33 @@ def update_display_word(letter):
         lives -= 1
 
 
+def prompt_to_play_again():
+    while True:  # keep on asking!
+        answer = input('Do you wish to play again? Y/N')
+
+        if answer.upper() == 'Y':
+            print()
+            print('Starting new game...')
+            time.sleep(2 * SLEEP_TIME)
+            return True
+        elif answer.upper() == 'N':
+            print()
+            print('Goodbye')
+            power_down = list('..........')
+            while len(power_down) > 0:
+                print(''.join(power_down))
+                time.sleep(SLEEP_TIME / 2)
+                power_down.pop()
+            return False
+        else:
+            print('Invalid input')
+
+
 def place_letters(letter):
     for position_in_word in range(len(hidden_word)):
         if hidden_word[position_in_word] == letter:
             display_word[position_in_word] = letter
             print(''.join(display_word))  # TODO if there are multiple letters in loops and displays multiple display_words
-
-
-def prompt_for_level():
-    while True:  # keep asking until we get valid input
-        print('Enter 1 for Easy')
-        print('Enter 2 for Medium')
-        print('Enter 3 for Hard')
-        level = input('')  # explain why ''
-
-        if level not in ['1', '2', '3']:
-            print('Invalid Input')
-            print()
-        else:
-            return get_word_length(level)
 
 
 def get_word_length(level):
@@ -139,13 +147,6 @@ def get_word_length(level):
         return 10
 
 
-def pick_random_word(length):
-    words = load_words_from_file(length)
-    word = words.pop()  # Pops word from list
-    word = word.upper()  # Forces all string output into a list for comparison.
-    return word
-
-
 #  TODO take hard and medium words away to create easy words
 def load_words_from_file(length):
     words = set()  # Not an instance variable as temporary this function
@@ -155,14 +156,6 @@ def load_words_from_file(length):
             if len(row[0]) == length:
                 words.add(row[0])
     return words
-
-
-def set_initial_display_word():
-    for hidden_letter in hidden_word:
-        if hidden_letter in ALPHABET:
-            display_word.append('.')  # put "." for every letter in hidden word
-        else:
-            display_word.append('?')  # leave as check during development
 
 
 def is_valid_guess(letter_guessed):

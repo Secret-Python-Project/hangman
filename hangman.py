@@ -21,15 +21,12 @@ hidden_word = []
 display_word = []
 lives = 0
 
+
 def play_single_game():
     global hidden_word, lives
     lives = STARTING_LIVES
 
-    introduce_game()  # View layer
-    word_length = prompt_for_level()
-    hidden_word = pick_random_word(word_length)
-    set_initial_display_word()
-    print('Time to start guessing your', len(hidden_word), 'letter word', ''.join(display_word))
+    setup_game()
 
     while display_word != hidden_word:
         if lives == 0:
@@ -40,6 +37,15 @@ def play_single_game():
         process_guess(letter)
 
     print('Waahoooo You Guessed it!')
+
+
+def setup_game():
+    global hidden_word
+    introduce_game()  # View layer
+    word_length = prompt_for_level()
+    hidden_word = pick_random_word(word_length)
+    set_initial_display_word()
+    print('Time to start guessing your', len(hidden_word), 'letter word', ''.join(display_word))
 
 
 def introduce_game():
@@ -80,11 +86,10 @@ def pick_random_word(length):
 
 
 def set_initial_display_word():
+    # note can multiply lists like this display_word = ["."] * len(hidden_word)
     for hidden_letter in hidden_word:
-        if hidden_letter in ALPHABET:
-            display_word.append('.')  # put "." for every letter in hidden word
-        else:
-            display_word.append('?')  # leave as check during development
+        assert hidden_letter in ALPHABET
+        display_word.append('.')  # put "." for every letter in hidden word
 
 
 def get_player_guess():
@@ -159,10 +164,10 @@ def get_word_length(level):
 def load_words_from_file(length):
     words = set()  # Not an instance variable as temporary this function
     with open(WORD_BANK) as file:
-        reader = csv.reader(file)
-        for row in reader:
-            if len(row[0]) == length:
-                words.add(row[0])
+        for line in file:
+            line = line.strip()  # to newline characters
+            if len(line) == length:
+                words.add(line)
     return words
 
 

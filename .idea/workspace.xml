@@ -3,6 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="611ad9f5-b860-4e9b-a0b3-808db55cbf7e" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/hangman.py" beforeDir="false" afterPath="$PROJECT_DIR$/hangman.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/words.csv" beforeDir="false" afterPath="$PROJECT_DIR$/words.csv" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -16,11 +17,30 @@
       <file leaf-file-name="hangman.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/hangman.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="570">
-              <caret line="38" column="70" selection-start-line="38" selection-start-column="70" selection-end-line="38" selection-end-column="70" />
+            <state relative-caret-position="55">
+              <caret line="135" column="22" lean-forward="true" selection-start-line="135" selection-start-column="22" selection-end-line="135" selection-end-column="22" />
               <folding>
                 <element signature="e#0#10#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="words.csv" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/words.csv">
+          <provider selected="true" editor-type-id="text-editor">
+            <state>
+              <caret column="1" selection-start-column="1" selection-end-column="1" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="hangman_examples.md" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/hangman_examples.md">
+          <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+            <state split_layout="SPLIT">
+              <first_editor />
+              <second_editor />
             </state>
           </provider>
         </entry>
@@ -41,6 +61,7 @@
       <find>pick_random_word</find>
       <find>load_words_from_file</find>
       <find>current_lives</find>
+      <find>left</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -49,9 +70,9 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/words.csv" />
         <option value="$PROJECT_DIR$/hangman_tests.txt" />
         <option value="$PROJECT_DIR$/pytesting" />
+        <option value="$PROJECT_DIR$/words.csv" />
         <option value="$PROJECT_DIR$/hangman.py" />
       </list>
     </option>
@@ -502,23 +523,30 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/hangman_tests.txt" />
+    <entry file="file://$PROJECT_DIR$/pytesting" />
     <entry file="file://$PROJECT_DIR$/words.csv">
       <provider selected="true" editor-type-id="text-editor">
         <state>
-          <caret selection-end-column="18" />
+          <caret column="1" selection-start-column="1" selection-end-column="1" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/hangman_tests.txt" />
-    <entry file="file://$PROJECT_DIR$/hangman_examples.md" />
-    <entry file="file://$PROJECT_DIR$/pytesting" />
     <entry file="file://$PROJECT_DIR$/hangman.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="570">
-          <caret line="38" column="70" selection-start-line="38" selection-start-column="70" selection-end-line="38" selection-end-column="70" />
+        <state relative-caret-position="55">
+          <caret line="135" column="22" lean-forward="true" selection-start-line="135" selection-start-column="22" selection-end-line="135" selection-end-column="22" />
           <folding>
             <element signature="e#0#10#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/hangman_examples.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="SPLIT">
+          <first_editor />
+          <second_editor />
         </state>
       </provider>
     </entry>

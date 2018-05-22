@@ -9,7 +9,6 @@ WORD_BANK = '10k_words.txt'
 
 # private instance variables for state
 lives = STARTING_LIVES
-word_length = 0
 hidden_word = []
 display_word = []
 
@@ -23,12 +22,12 @@ def play_games():
 
 
 def play_single_game():
-    global lives, word_length, hidden_word
+    global lives, hidden_word
     lives = STARTING_LIVES
 
     introduce_game()  # View layer
     word_length = prompt_for_level()
-    hidden_word = pick_random_word()
+    hidden_word = pick_random_word(word_length)
     set_initial_display_word()
     print('Time to start guessing your', len(hidden_word), 'letter word', ''.join(display_word))
 
@@ -140,28 +139,23 @@ def get_word_length(level):
         return 10
 
 
+def pick_random_word(length):
+    words = load_words_from_file(length)
+    word = words.pop()  # Pops word from list
+    word = word.upper()  # Forces all string output into a list for comparison.
+    return word
+
+
 #  TODO take hard and medium words away to create easy words
-def load_words_from_file():
+def load_words_from_file(length):
     words = set()  # Not an instance variable as temporary this function
     with open(WORD_BANK) as file:
         reader = csv.reader(file)
         for row in reader:
-            words.add(get_first_column_longer_than(row))
+            if len(row[0]) == length:
+                words.add(row[0])
     return words
 
-
-def get_first_column_longer_than(row):
-    first_column = row[0]
-    if len(first_column) > word_length:
-        return first_column
-
-
-def pick_random_word():
-    words = load_words_from_file()
-    word = words.pop()  # Pops word from list
-    word = word.upper()  # Forces all UPPER case
-    word = list(word)  # Converts the string output into a list for comparison.
-    return word
 
 def set_initial_display_word():
     for hidden_letter in hidden_word:

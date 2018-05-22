@@ -1,21 +1,21 @@
 import csv
 import time
 
-# configuration parameters
-alphabet = 'abcdefghijklmnopqrstuvwxyz'.upper()
-sleep_time = 0.5  # TODO constants as UPPERCASE style wise?
+# configuration parameters, constants as UPPERCASE style wise
+ALPHABET = 'abcdefghijklmnopqrstuvwxyz'.upper()
+SLEEP_TIME = 0.5
+STARTING_LIVES = 5
 
-# private instance variables for state
-starting_lives = 5
-current_lives = starting_lives
-difficulty = 0  # TODO consider enum
+# private instance variables for state
+current_lives = STARTING_LIVES
+word_length = 0
 hidden_word = []
 display_word = []
 
 
 def play_game():
-    global current_lives, starting_lives
-    current_lives = starting_lives
+    global current_lives, STARTING_LIVES
+    current_lives = STARTING_LIVES
 
     introduce_game() # View layer
     pick_difficulty()  # TODO separate View and Controller
@@ -48,7 +48,7 @@ def does_player_want_to_play_again():
         current_lives
         print()
         print('Staring new game...')
-        time.sleep(2 * sleep_time)
+        time.sleep(2 * SLEEP_TIME)
         play_game()
 
     elif answer.upper() == 'N':
@@ -57,7 +57,7 @@ def does_player_want_to_play_again():
         power_down = list('..........')
         while len(power_down) > 0:
             print(''.join(power_down))
-            time.sleep(sleep_time / 2)
+            time.sleep(SLEEP_TIME / 2)
             power_down.pop()
         quit()
 
@@ -106,14 +106,14 @@ def introduce_game():
     power_up = list('.')
     while len(power_up) < 6:
         print(''.join(power_up))
-        time.sleep(sleep_time / 2)
+        time.sleep(SLEEP_TIME / 2)
         power_up.append('.')
-    time.sleep(sleep_time)  # magic number
+    time.sleep(SLEEP_TIME)  # magic number
     print('Before I go get some words...')
-    time.sleep(sleep_time)
+    time.sleep(SLEEP_TIME)
     print('What Difficulty would you like to play?')
     print()
-    time.sleep(sleep_time)
+    time.sleep(SLEEP_TIME)
 
 
 def pick_difficulty():
@@ -131,14 +131,14 @@ def pick_difficulty():
 
 
 def assign_difficulty(level):
-    global difficulty
+    global word_length
 
     if level == '1':
-        difficulty = 5  # TODO how to formally reference the global? ALSO needs Enum-ing
+        word_length = 5  # TODO how to formally reference the global? ALSO needs Enum-ing
     elif level == '2':
-        difficulty = 7
+        word_length = 7
     elif level == '3':
-        difficulty = 10
+        word_length = 10
 
 
 #  TODO take hard and medium words away to create easy words
@@ -153,7 +153,7 @@ def load_words_from_file():
 
 def get_first_column_longer_than(row):
     first_column = row[0]
-    if len(first_column) > difficulty:
+    if len(first_column) > word_length:
         return first_column
 
 
@@ -169,7 +169,7 @@ def set_random_hidden_word():
 
 def set_initial_display_word():
     for hidden_letter in hidden_word:
-        if hidden_letter in alphabet:
+        if hidden_letter in ALPHABET:
             display_word.append('.')  # put "." for every letter in hidden word
         else:
             display_word.append('?')  # leave as check during development
@@ -178,7 +178,7 @@ def set_initial_display_word():
 def is_valid_guess(letter_guessed):
     if len(letter_guessed) != 1:  # single characters only
         return False
-    elif letter_guessed not in alphabet:
+    elif letter_guessed not in ALPHABET:
         return False
     else:
         return True

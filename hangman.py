@@ -14,6 +14,26 @@ def play_games():
     while wants_to_play:
         play_single_game()
         wants_to_play = prompt_to_play_again()
+        if wants_to_play:
+            print_new_game_sequence()
+
+    print_shutdown_sequence()
+
+
+def print_new_game_sequence():
+    print()
+    print('Starting new game...')
+    time.sleep(2 * SLEEP_TIME)
+
+
+def print_shutdown_sequence():
+    print()
+    print('Goodbye')
+    power_down = list('..........')
+    while len(power_down) > 0:
+        print(''.join(power_down))
+        time.sleep(SLEEP_TIME / 2)
+        power_down.pop()
 
 
 # private instance variables for state
@@ -131,18 +151,8 @@ def prompt_to_play_again():
         answer = input('Do you wish to play again? Y/N')
 
         if answer.upper() == 'Y':
-            print()
-            print('Starting new game...')
-            time.sleep(2 * SLEEP_TIME)
             return True
         elif answer.upper() == 'N':
-            print()
-            print('Goodbye')
-            power_down = list('..........')
-            while len(power_down) > 0:
-                print(''.join(power_down))
-                time.sleep(SLEEP_TIME / 2)
-                power_down.pop()
             return False
         else:
             print('Invalid input')

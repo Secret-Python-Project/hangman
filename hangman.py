@@ -1,4 +1,3 @@
-import csv
 import time
 
 # configuration parameters, constants as UPPERCASE style wise
@@ -47,9 +46,8 @@ def play_single_game():
     lives = STARTING_LIVES
 
     setup_game()
-    print(hidden_word)
 
-    while display_word != hidden_word and lives != 0:
+    while display_word != hidden_word and lives >= 1:
         print('You have', lives, 'left')  # note , adds spaces for you
         letter = get_player_guess()
         process_guess(letter)
@@ -108,7 +106,6 @@ def pick_random_word(length):
 
 
 def set_initial_display_word():
-    # note can multiply lists like this display_word = ["."] * len(hidden_word)
     global display_word
     display_word = []
     for hidden_letter in hidden_word:
@@ -138,7 +135,7 @@ def is_valid_guess(letter_guessed):
 def process_guess(letter):
     global lives
     if letter in hidden_word:
-        print('Found A Letter')
+        print('Found a letter')
         place_letters(letter)
     else:
         print('Not in this word, try again...')
@@ -162,7 +159,8 @@ def place_letters(letter):
     for position_in_word in range(len(hidden_word)):
         if hidden_word[position_in_word] == letter:
             display_word[position_in_word] = letter
-            print(''.join(display_word))  # TODO if there are multiple letters in loops and displays multiple display_words
+
+    print(''.join(display_word))  # note indentation
 
 
 def get_word_length(level):
@@ -174,7 +172,6 @@ def get_word_length(level):
         return 10
 
 
-#  TODO take hard and medium words away to create easy words
 def load_words_from_file(length):
     words = set()  # Not an instance variable as temporary this function
     with open(WORD_BANK) as file:

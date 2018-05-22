@@ -5,6 +5,7 @@ import time
 ALPHABET = 'abcdefghijklmnopqrstuvwxyz'.upper()
 SLEEP_TIME = 0.5
 STARTING_LIVES = 5
+WORD_BANK = '10k_words.txt'
 
 # private instance variables for state
 current_lives = STARTING_LIVES
@@ -14,19 +15,18 @@ display_word = []
 
 
 def play_game():
-    global current_lives, STARTING_LIVES
+    global current_lives, word_length, hidden_word
     current_lives = STARTING_LIVES
 
-    introduce_game() # View layer
-    pick_difficulty()  # TODO separate View and Controller
-    set_random_hidden_word()  # could be load_words_from_file().pop()
+    introduce_game()  # View layer
+    word_length = prompt_for_level()
+    hidden_word = pick_random_word()
     set_initial_display_word()
-    print('Time to start guessing your', len(hidden_word), 'letter word' , ''.join(display_word))
-    print("Hidden word: ", ''.join(hidden_word))  # TODO remove:
+    print('Time to start guessing your', len(hidden_word), 'letter word', ''.join(display_word))
 
     while display_word != hidden_word:
         check_lives()
-        print('You have',current_lives,' left')
+        print('You have', current_lives, ' left')
         letter = get_player_guess()
         update_display_word(letter)
 
@@ -50,7 +50,6 @@ def does_player_want_to_play_again():
         print('Staring new game...')
         time.sleep(2 * SLEEP_TIME)
         play_game()
-
     elif answer.upper() == 'N':
         print()
         print('Goodbye')
@@ -60,7 +59,6 @@ def does_player_want_to_play_again():
             time.sleep(SLEEP_TIME / 2)
             power_down.pop()
         quit()
-
     else:
         print('Invalid input')
         does_player_want_to_play_again()
@@ -111,40 +109,38 @@ def introduce_game():
     time.sleep(SLEEP_TIME)  # magic number
     print('Before I go get some words...')
     time.sleep(SLEEP_TIME)
-    print('What Difficulty would you like to play?')
+    print('What level would you like to play?')
     print()
     time.sleep(SLEEP_TIME)
 
 
-def pick_difficulty():
-    print('Enter 1 for Easy')
-    print('Enter 2 for Medium')
-    print('Enter 3 for Hard')
-    level = input('')  # explain why ''
+def prompt_for_level():
+    while True:  # keep asking until we get valid input
+        print('Enter 1 for Easy')
+        print('Enter 2 for Medium')
+        print('Enter 3 for Hard')
+        level = input('')  # explain why ''
 
-    if level not in ['1', '2', '3']:
-        print('Invalid Input')
-        print()
-        pick_difficulty()
-    else:
-        assign_difficulty(level)
+        if level not in ['1', '2', '3']:
+            print('Invalid Input')
+            print()
+        else:
+            return get_word_length(level)
 
 
-def assign_difficulty(level):
-    global word_length
-
+def get_word_length(level):
     if level == '1':
-        word_length = 5  # TODO how to formally reference the global? ALSO needs Enum-ing
+        return 5
     elif level == '2':
-        word_length = 7
+        return 7
     elif level == '3':
-        word_length = 10
+        return 10
 
 
 #  TODO take hard and medium words away to create easy words
 def load_words_from_file():
     words = set()  # Not an instance variable as temporary this function
-    with open('10k_words.txt') as file:
+    with open(WORD_BANK) as file:
         reader = csv.reader(file)
         for row in reader:
             words.add(get_first_column_longer_than(row))
@@ -157,15 +153,12 @@ def get_first_column_longer_than(row):
         return first_column
 
 
-def set_random_hidden_word():
+def pick_random_word():
     words = load_words_from_file()
-    global hidden_word
-    hidden_word = words.pop() # Pops word from list
-    hidden_word = hidden_word.upper() # Forces all UPPER case
-    hidden_word = list(hidden_word) # Converts the string output into a list for comparison.
-
-    # TODO make hidden_word upper case
-
+    word = words.pop()  # Pops word from list
+    word = word.upper()  # Forces all UPPER case
+    word = list(word)  # Converts the string output into a list for comparison.
+    return word
 
 def set_initial_display_word():
     for hidden_letter in hidden_word:

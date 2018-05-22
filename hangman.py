@@ -89,6 +89,8 @@ def pick_random_word(length):
 
 def set_initial_display_word():
     # note can multiply lists like this display_word = ["."] * len(hidden_word)
+    global display_word
+    display_word = []
     for hidden_letter in hidden_word:
         assert hidden_letter in ALPHABET
         display_word.append('.')  # put "." for every letter in hidden word

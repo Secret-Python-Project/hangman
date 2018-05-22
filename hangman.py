@@ -27,16 +27,17 @@ def play_single_game():
     lives = STARTING_LIVES
 
     setup_game()
+    print(hidden_word)
 
-    while display_word != hidden_word:
-        if lives == 0:
-            print('You have run out of lives...')
-            return  # note leave the game (see break, return, continue differences)
+    while display_word != hidden_word and lives != 0:
         print('You have', lives, 'left')  # note , adds spaces for you
         letter = get_player_guess()
         process_guess(letter)
 
-    print('Waahoooo You Guessed it!')
+    if lives == 0:
+        print('You have run out of lives...')
+    else:
+        print('Waahoooo You Guessed it!')
 
 
 def setup_game():

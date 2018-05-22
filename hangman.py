@@ -7,11 +7,6 @@ SLEEP_TIME = 0.5
 STARTING_LIVES = 5
 WORD_BANK = '10k_words.txt'
 
-# private instance variables for state
-lives = STARTING_LIVES
-hidden_word = []
-display_word = []
-
 
 def play_games():
     wants_to_play = True
@@ -21,8 +16,13 @@ def play_games():
         wants_to_play = prompt_to_play_again()
 
 
+# private instance variables for state
+hidden_word = []
+display_word = []
+lives = 0
+
 def play_single_game():
-    global lives, hidden_word
+    global hidden_word, lives
     lives = STARTING_LIVES
 
     introduce_game()  # View layer
@@ -37,7 +37,7 @@ def play_single_game():
             return  # note leave the game (see break, return, continue differences)
         print('You have', lives, 'left')  # note , adds spaces for you
         letter = get_player_guess()
-        update_display_word(letter)
+        process_guess(letter)
 
     print('Waahoooo You Guessed it!')
 
@@ -106,16 +106,14 @@ def is_valid_guess(letter_guessed):
         return True
 
 
-def update_display_word(letter):
+def process_guess(letter):
+    global lives
     if letter in hidden_word:
         print('Found A Letter')
         place_letters(letter)
     else:
-        global lives
-
         print('Not in this word, try again...')
         print(''.join(display_word))
-
         lives -= 1
 
 
